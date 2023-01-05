@@ -2,7 +2,7 @@ import "../styles/Store.css";
 
 export const Store = () => {
   return (
-    <div className="container-fluid w-75 mt-1 p-5 store">
+    <div className="container-fluid w-75 mt-1 p-5" id="store-page">
       <div className="row">
 
         <div className="card m-4 ms-5 col">

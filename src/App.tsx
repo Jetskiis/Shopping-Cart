@@ -7,6 +7,8 @@ import Contact from './components/Contact';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Store from './components/Store';
+import Checkout from './components/Checkout';
+
 
 export const App = () => {
   const [numItems, setNumItems] = useState<number>(0);
@@ -21,6 +23,7 @@ export const App = () => {
             <Route path="/" index element={<Home/>}/>
             <Route path="/store" element={<Store/>}/>
             <Route path="/contact" element={<Contact/>}/>
+            <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
       </Router>
     </>

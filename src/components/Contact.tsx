@@ -1,7 +1,9 @@
 export const Contact = () => {
   return (
-    <div className="bg-primary text-white p-3 m-5 w-25 mx-auto">
+    <div className="bg-primary text-white p-3 m-5 w-25 mx-auto" id="contact-form">
+
       <form className="p-5">
+
         <h2 className="text-center fs-1 fw-bold text-dark mb-4">Contact Us</h2>
 
         <div className="mb-3 text-dark fs-3 fw-bold">
@@ -36,6 +38,7 @@ export const Contact = () => {
           </label>
           <textarea className="form-control fs-3" id="message" rows={8} />
         </div>
+
       </form>
     </div>
   );
