@@ -1,4 +1,19 @@
-export const Navbar = () => {
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+interface NavbarProps {
+  quantity: number;
+}
+
+export const Navbar = (props: NavbarProps) => {
+  const [numItems, setNumItems] = useState<number>(0);
+
+  useEffect(() => {
+    if (props.quantity != numItems) {
+      setNumItems(props.quantity);
+    }
+  }, [props.quantity, numItems]);
+
   return (
     <div className="navbar navbar-dark bg-dark navbar-expand-md p-4" id="navbar-banner">
       <div className="container-fluid d-flex flex-row justify-content-around text-white">
@@ -10,34 +25,34 @@ export const Navbar = () => {
           <ul className="navbar-nav mb-2 mb-lg-0">
 
             <li className="nav-item">
-              <a className="nav-link text-white fw-bold" href="/">
+              <Link className="nav-link text-white fw-bold" to="/">
                 Home
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link text-white fw-bold" href="/store">
+              <Link className="nav-link text-white fw-bold" to="/store">
                 Store
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link text-white fw-bold" href="/contact">
+              <Link className="nav-link text-white fw-bold" to="/contact">
                 Contact
-              </a>
+              </Link>
             </li>
 
 
             <li className="nav-item ms-4">
-              <a className="nav-link text-white fw-bold" href="/checkout">
+              <Link className="nav-link text-white fw-bold" to="/checkout">
                 Cart
-              </a>
+              </Link>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link text-white">(0)</a>
+              <a className="nav-link text-white">({numItems})</a>
             </li>
-            
+
           </ul>
 
         </div>

@@ -1,6 +1,21 @@
+import { useState, useEffect } from "react";
 import "../styles/Checkout.css";
 
-export const Checkout = () => {
+interface CheckoutProps {
+  cart: productInfo[],
+  modifyCart: (cart: {}) => void
+  changeItems: (numItems: number) => void
+}
+
+type productInfo = {
+  name: string,
+  price: number
+  quantity: number
+}
+
+const Checkout = (props: CheckoutProps) => {
+  const [total, setTotal] = useState(0);
+
   return (
     <div className="d-flex flex-row justify-content-center min-vh-100" id="shopping-cart">
 

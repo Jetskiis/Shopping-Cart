@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Contact = void 0;
+const jsx_runtime_1 = require("react/jsx-runtime");
+const Contact = () => {
+    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: "bg-primary text-white p-3 m-5 w-25 mx-auto", id: "contact-form" }, { children: (0, jsx_runtime_1.jsxs)("form", Object.assign({ className: "p-5" }, { children: [(0, jsx_runtime_1.jsx)("h2", Object.assign({ className: "text-center fs-1 fw-bold text-dark mb-4" }, { children: "Contact Us" })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mb-3 text-dark fs-3 fw-bold" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "first-name", className: "form-label" }, { children: "First Name" })), (0, jsx_runtime_1.jsx)("input", { type: "text", className: "form-control fs-3", id: "first-name" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mb-3 text-dark fs-3 fw-bold" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "last-name", className: "form-label" }, { children: "Last Name" })), (0, jsx_runtime_1.jsx)("input", { type: "text", className: "form-control fs-3", id: "last-name" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mb-3 mt-3 text-dark fs-3 fw-bold" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "email", className: "form-label" }, { children: "Email Address" })), (0, jsx_runtime_1.jsx)("input", { type: "email", className: "form-control fs-3", id: "email", "aria-describedby": "emailHelp" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "mb-3 text-dark fs-3 fw-bold" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "message", className: "form-label" }, { children: "Message" })), (0, jsx_runtime_1.jsx)("textarea", { className: "form-control fs-3", id: "message", rows: 8 })] }))] })) })));
+};
+exports.Contact = Contact;
+exports.default = exports.Contact;
+//# sourceMappingURL=Contact.js.map
