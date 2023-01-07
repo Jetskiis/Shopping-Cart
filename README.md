@@ -1,6 +1,6 @@
-Shopping Cart project created using React, TypeScript, Bootstrap. 
+Shopping Cart project created using React w/ router, TypeScript, Bootstrap, and CSS. 
 <br>
-This is designed to mimic a real store website where users can browse for product and add them to the cart.
+This is designed to mimic a real store website where users can browse the site for products and add them to the cart. Users are able to change the quantity of an item in their shopping cart or remove the item altogether.
 <br>
 <br>
 Live demo: https://jetskiis.github.io/Shopping-Cart
