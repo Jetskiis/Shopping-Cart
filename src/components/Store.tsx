@@ -9,16 +9,50 @@ interface StoreProps {
 }
 
 type productInfo = {
+  id: number,
   name: string,
   price: number
   quantity: number
+  url: string
 }
 
 export const Store = (props: StoreProps) => {
   function addToCart(e: React.MouseEvent) {
+    const productID = (e.target as HTMLFormElement).parentElement?.parentElement?.getAttribute("id");
+    const productName = (e.target as HTMLFormElement).parentElement?.parentElement?.dataset.name;
+    const productPrice = products[productName?.toLowerCase() as keyof typeof products].price;
+    const productURL = products[productName?.toLowerCase() as keyof typeof products].url;
 
+    if(checkInCart(productName as string)) {
+      const newCart = props.cart.map((product) => {
+        if(product.name === productName) {
+          product.quantity += 1;
+        }
+        return product;
+      });
+      props.modifyCart(newCart);
+    }
+    else{
+      const newProduct = {
+        id: productID,
+        name: productName as string,
+        price: productPrice,
+        quantity: 1,
+        url: productURL
+      };
+      props.modifyCart([...props.cart, newProduct]);
+    }
     props.changeItems(props.itemCount + 1);
   }
+
+  const checkInCart = (name: string) => {
+    for(const product of props.cart) {
+      if(product.name === name) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   const products = {
     airpods: {
@@ -43,7 +77,7 @@ export const Store = (props: StoreProps) => {
       id: 3,
       name: "Headphones",
       price: 250,
-      url: "img/product_img/headphones.png"
+      url: "img/product_img/headphone.png"
     },
     ipad: {
       id: 4,
@@ -79,7 +113,7 @@ export const Store = (props: StoreProps) => {
       id: 9,
       name: "TV",
       price: 999,
-      url: "img/product_img/tv.png"
+      url: "img/product_img/TV.png"
     },
     wacom: {
       id: 10,
@@ -95,130 +129,38 @@ export const Store = (props: StoreProps) => {
     }
   }
 
+  const firstRow = [products.airpods, products.drone, products.gopro, products.headphones];
+  const secondRow = [products.ipad, products.iphone, products.macbook, products.monitor];
+  const thirdRow = [products.ring, products.tv, products.wacom, products.watch];
 
+  const mapRows = (row: any) => {
+    return row.map((product: any) => {
+      // console.log(product.name);
+      return (
+        <div className="card m-4 ms-5 col" id={product.id} data-name={product.name} key={product.id}>
+          <img src={product.url} className="mx-auto" alt={product.name} />
+          <div className="card-body border-top border-2 border-dark ms-2">
+            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">{product.name}</h5>
+            <p className="card-text ms-1 fs-4">${product.price}</p>
+            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}> Add to Cart</button>
+          </div>
+        </div>)
+    })
+  }
 
   return (
     <div className="container-fluid w-75 mt-1 p-5" id="store-page">
       <div className="row">
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/airpods.png" className="mx-auto" alt="airpods" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Airpods</h5>
-            <p className="card-text ms-1 fs-4">$200</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}> Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-        {/* <div className="card m-4 ms-5 col">
-          <img src="img/product_img/drone.png" className="mx-auto" alt="drone" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Drone</h5>
-            <p className="card-text ms-1 fs-4">$699</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/gopro.png" className="mx-auto" alt="gopro" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">GoPro</h5>
-            <p className="card-text ms-1 fs-4">$450</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/headphone.png" className="mx-auto" alt="headphone" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Headphones</h5>
-            <p className="card-text ms-1 fs-4">$250</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
+        {mapRows(firstRow)}
       </div>
 
       <div className="row">
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/ipad.png" className="mx-auto" alt="ipad" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">iPad</h5>
-            <p className="card-text ms-1 fs-4">$599</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/iphone.png" className="mx-auto" alt="iphone" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">iPhone</h5>
-            <p className="card-text ms-1 fs-4">$799</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/macbook.png" className="mx-auto" alt="macbook" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Macbook</h5>
-            <p className="card-text ms-1 fs-4">$1299</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/monitor.png" className="mx-auto" alt="monitor" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Monitor</h5>
-            <p className="card-text ms-1 fs-4">$200</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
+        {mapRows(secondRow)}
       </div>
 
-
       <div className="row">
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/ring.png" className="mx-auto" alt="ring" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Ring</h5>
-            <p className="card-text ms-1 fs-4">$89</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/TV.png" className="mx-auto" alt="TV" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">TV</h5>
-            <p className="card-text ms-1 fs-4">$599</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/wacom.png" className="mx-auto" alt="wacom" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Wacom</h5>
-            <p className="card-text ms-1 fs-4">$180</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="card m-4 ms-5 col">
-          <img src="img/product_img/watch.png" className="mx-auto" alt="watch" />
-          <div className="card-body border-top border-2 border-dark ms-2">
-            <h5 className="card-title ms-1 fs-3 fw-bold mt-3">Watch</h5>
-            <p className="card-text ms-1 fs-4">$429</p>
-            <button className="btn btn-dark fs-4 fw-bold w-100" onClick={addToCart}>Add to Cart</button>
-          </div>
-        </div>
-
-      </div> */}
+        {mapRows(thirdRow)}
+      </div>
 
     </div>
 

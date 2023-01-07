@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Checkout.css";
 
 interface CheckoutProps {
@@ -8,13 +8,54 @@ interface CheckoutProps {
 }
 
 type productInfo = {
+  id: number,
   name: string,
   price: number
   quantity: number
+  url: string
 }
 
 const Checkout = (props: CheckoutProps) => {
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    for (const product of props.cart) {
+      total += product.price * product.quantity;
+    }
+    setTotal(total);
+  }, [total, props.cart]);
+
+  const removeItem = (e: React.MouseEvent) => {
+  };
+
+  const decreaseQuantity = (e: React.MouseEvent) => {
+  };
+
+  const increaseQuantity = (e: React.MouseEvent) => {
+  };
+
+  const cartItems = () => {
+    return props.cart.map((product) => {
+      return (
+        <div className="card border border-dark mx-2 my-3 p-2 d-flex flex-row justify-content-center align-items-center bg-light checkout-card" key={product.id}>
+          <img src={product.url} className="mx-auto" alt={product.name} />
+          <div className="d-flex flex-column card-body ms-2 item-container">
+            <p className="fs-4">{product.name}</p>
+            <p className="fs-4">${product.price}</p>
+          </div>
+          <div className="d-flex flex-column justify-content-center-align-items-center">
+            <div className="d-flex flex-row justify-content-evenly  align-items-center border border-dark me-2 card-menu">
+              <button onClick={decreaseQuantity}>-</button>
+              <p className="align-self-end fs-3">{product.quantity}</p>
+              <button onClick={increaseQuantity}>+</button>
+            </div>
+            <button onClick={removeItem} className="align-self-start remove-item">Remove Item</button>
+          </div>
+        </div>
+      )
+    })
+  };
 
   return (
     <div className="d-flex flex-row justify-content-center min-vh-100" id="shopping-cart">
@@ -22,29 +63,11 @@ const Checkout = (props: CheckoutProps) => {
       <div className='d-flex flex-column bg-light p-3 m-5 w-25'>
         <div className="align-self-center bg-dark text-white fw-bold fs-2 w-50 text-center mt-2 mb-4 p-2">Shopping Cart</div>
 
-        <div className="card border border-dark mx-2 my-3 p-2 d-flex flex-row justify-content-center align-items-center bg-light checkout-card">
-          <img src="img/product_img/airpods.png" className="mx-auto" alt="airpods" />
-          <div className="d-flex flex-column card-body ms-2 item-container">
-            <p className="fs-4">Airpods</p>
-            <p className="fs-4">$200</p>
-          </div>
-          <div className="d-flex flex-column justify-content-center-align-items-center">
-            <div className="d-flex flex-row justify-content-evenly  align-items-center border border-dark me-2 card-menu">
-              <button>-</button>
-              <p className="align-self-end fs-3">1</p>
-              <button>+</button>
-            </div>
-            <button className="align-self-start remove-item">Remove Item</button>
-
-          </div>
-
-
-
-        </div>
+        {cartItems()}
 
         <div className="d-flex border border-secondary flex-column justify-content-center align-items-center px-1 py-3 m-3">
-          <p className="fs-3 fw-bold total-cost">Total: $200</p>
-          <button className="bg-dark text-white fs-3 w-75 m-2 p-2 align-self-center">Proceed to Checkout</button>
+          <p className="fs-3 fw-bold total-cost">Total: ${total}</p>
+          <button onClick={() => alert("Thanks for coming by!")} className="bg-dark text-white fs-3 w-75 m-2 p-2 align-self-center">Proceed to Checkout</button>
         </div>
 
       </div>
