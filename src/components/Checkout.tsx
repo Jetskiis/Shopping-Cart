@@ -3,6 +3,7 @@ import "../styles/Checkout.css";
 
 interface CheckoutProps {
   cart: productInfo[],
+  itemCount: number,
   modifyCart: (cart: {}) => void
   changeItems: (numItems: number) => void
 }
@@ -27,18 +28,52 @@ const Checkout = (props: CheckoutProps) => {
   }, [total, props.cart]);
 
   const removeItem = (e: React.MouseEvent) => {
+    const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.dataset.pid;
+    let quantity = 0;
+    const newCart = props.cart.filter((product) => {
+      if (product.id == parseInt(id)) {
+        quantity = product.quantity;
+      }
+      return product.id != parseInt(id);
+    });
+    props.modifyCart(newCart);
+    props.changeItems(props.itemCount - quantity);
   };
 
   const decreaseQuantity = (e: React.MouseEvent) => {
+    const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.parentElement?.dataset.pid;
+    for (const product of props.cart) {
+      if (product.id == parseInt(id)) {
+        if (product.quantity == 1)
+          return;
+      }
+    }
+    const newCart = props.cart.map((product) => {
+      if (product.id == parseInt(id)) {
+        product.quantity -= 1;
+      }
+      return product;
+    });
+    props.modifyCart(newCart);
+    props.changeItems(props.itemCount - 1);
   };
 
   const increaseQuantity = (e: React.MouseEvent) => {
+    const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.parentElement?.dataset.pid;
+    const newCart = props.cart.map((product) => {
+      if (product.id == parseInt(id)) {
+        product.quantity += 1;
+      }
+      return product;
+    });
+    props.modifyCart(newCart);
+    props.changeItems(props.itemCount + 1);
   };
 
   const cartItems = () => {
     return props.cart.map((product) => {
       return (
-        <div className="card border border-dark mx-2 my-3 p-2 d-flex flex-row justify-content-center align-items-center bg-light checkout-card" key={product.id}>
+        <div className="card border border-dark mx-2 my-3 p-2 d-flex flex-row justify-content-center align-items-center bg-light checkout-card" data-pid={product.id} key={product.id}>
           <img src={product.url} className="mx-auto" alt={product.name} />
           <div className="d-flex flex-column card-body ms-2 item-container">
             <p className="fs-4">{product.name}</p>

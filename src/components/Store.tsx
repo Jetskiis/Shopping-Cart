@@ -16,6 +16,81 @@ type productInfo = {
   url: string
 }
 
+const products = {
+  airpods: {
+    id: 0,
+    name: "Airpods",
+    price: 200,
+    url: "img/product_img/airpods.png"
+  },
+  drone: {
+    id: 1,
+    name: "Drone",
+    price: 699,
+    url: "img/product_img/drone.png"
+  },
+  gopro: {
+    id: 2,
+    name: "GoPro",
+    price: 450,
+    url: "img/product_img/gopro.png"
+  },
+  headphones: {
+    id: 3,
+    name: "Headphones",
+    price: 250,
+    url: "img/product_img/headphone.png"
+  },
+  ipad: {
+    id: 4,
+    name: "iPad",
+    price: 599,
+    url: "img/product_img/ipad.png"
+  },
+  iphone: {
+    id: 5,
+    name: "iPhone",
+    price: 799,
+    url: "img/product_img/iphone.png"
+  },
+  macbook: {
+    id: 6,
+    name: "Macbook",
+    price: 1299,
+    url: "img/product_img/macbook.png"
+  },
+  monitor: {
+    id: 7,
+    name: "Monitor",
+    price: 200,
+    url: "img/product_img/monitor.png"
+  },
+  ring: {
+    id: 8,
+    name: "Ring",
+    price: 99,
+    url: "img/product_img/ring.png"
+  },
+  tv: {
+    id: 9,
+    name: "TV",
+    price: 999,
+    url: "img/product_img/TV.png"
+  },
+  wacom: {
+    id: 10,
+    name: "Wacom",
+    price: 180,
+    url: "img/product_img/wacom.png"
+  },
+  watch: {
+    id: 11,
+    name: "Watch",
+    price: 429,
+    url: "img/product_img/watch.png"
+  }
+}
+
 export const Store = (props: StoreProps) => {
   function addToCart(e: React.MouseEvent) {
     const productID = (e.target as HTMLFormElement).parentElement?.parentElement?.getAttribute("id");
@@ -23,16 +98,16 @@ export const Store = (props: StoreProps) => {
     const productPrice = products[productName?.toLowerCase() as keyof typeof products].price;
     const productURL = products[productName?.toLowerCase() as keyof typeof products].url;
 
-    if(checkInCart(productName as string)) {
+    if (checkInCart(productName as string)) {
       const newCart = props.cart.map((product) => {
-        if(product.name === productName) {
+        if (product.name === productName) {
           product.quantity += 1;
         }
         return product;
       });
       props.modifyCart(newCart);
     }
-    else{
+    else {
       const newProduct = {
         id: productID,
         name: productName as string,
@@ -46,88 +121,14 @@ export const Store = (props: StoreProps) => {
   }
 
   const checkInCart = (name: string) => {
-    for(const product of props.cart) {
-      if(product.name === name) {
+    for (const product of props.cart) {
+      if (product.name === name) {
         return true;
       }
     }
     return false;
   };
 
-  const products = {
-    airpods: {
-      id: 0,
-      name: "Airpods",
-      price: 200,
-      url: "img/product_img/airpods.png"
-    },
-    drone: {
-      id: 1,
-      name: "Drone",
-      price: 699,
-      url: "img/product_img/drone.png"
-    },
-    gopro: {
-      id: 2,
-      name: "GoPro",
-      price: 450,
-      url: "img/product_img/gopro.png"
-    },
-    headphones: {
-      id: 3,
-      name: "Headphones",
-      price: 250,
-      url: "img/product_img/headphone.png"
-    },
-    ipad: {
-      id: 4,
-      name: "iPad",
-      price: 599,
-      url: "img/product_img/ipad.png"
-    },
-    iphone: {
-      id: 5,
-      name: "iPhone",
-      price: 799,
-      url: "img/product_img/iphone.png"
-    },
-    macbook: {
-      id: 6,
-      name: "Macbook",
-      price: 1299,
-      url: "img/product_img/macbook.png"
-    },
-    monitor: {
-      id: 7,
-      name: "Monitor",
-      price: 200,
-      url: "img/product_img/monitor.png"
-    },
-    ring: {
-      id: 8,
-      name: "Ring",
-      price: 99,
-      url: "img/product_img/ring.png"
-    },
-    tv: {
-      id: 9,
-      name: "TV",
-      price: 999,
-      url: "img/product_img/TV.png"
-    },
-    wacom: {
-      id: 10,
-      name: "Wacom",
-      price: 180,
-      url: "img/product_img/wacom.png"
-    },
-    watch: {
-      id: 11,
-      name: "Watch",
-      price: 429,
-      url: "img/product_img/watch.png"
-    }
-  }
 
   const firstRow = [products.airpods, products.drone, products.gopro, products.headphones];
   const secondRow = [products.ipad, products.iphone, products.macbook, products.monitor];

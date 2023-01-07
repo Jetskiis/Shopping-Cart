@@ -24,7 +24,7 @@ export const App = () => {
           <Route path="/" index element={<Home />} />
           <Route path="/store" element={<Store cart={cartItems} itemCount = {numItems} modifyCart={setCartItems} changeItems={setNumItems} />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/checkout" element={<Checkout cart={cartItems} modifyCart={setCartItems} changeItems={setNumItems} />} />
+          <Route path="/checkout" element={<Checkout cart={cartItems} itemCount = {numItems} modifyCart={setCartItems} changeItems={setNumItems} />} />
         </Routes>
       </Router>
     </>
