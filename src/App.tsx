@@ -2,7 +2,7 @@
 import './App.css';
 
 import { useState } from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Checkout from './components/Checkout';
 import Contact from './components/Contact';
 import Home from './components/Home';
@@ -18,7 +18,7 @@ export const App = () => {
   return (
     document.title = "Electronics Store",
     <>
-      <Router >
+      <Router basename="/Shopping-Cart" >
         <Navbar quantity={numItems} />
         <Routes>
           <Route path="/" index element={<Home />} />
