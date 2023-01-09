@@ -92,6 +92,8 @@ const products = {
 }
 
 export const Store = (props: StoreProps) => {
+  const { cart, itemCount, modifyCart, changeItems } = props;
+
   function addToCart(e: React.MouseEvent) {
     const productID = (e.target as HTMLFormElement).parentElement?.parentElement?.getAttribute("id");
     const productName = (e.target as HTMLFormElement).parentElement?.parentElement?.dataset.name;
@@ -99,13 +101,13 @@ export const Store = (props: StoreProps) => {
     const productURL = products[productName?.toLowerCase() as keyof typeof products].url;
 
     if (checkInCart(productName as string)) {
-      const newCart = props.cart.map((product) => {
+      const newCart = cart.map((product) => {
         if (product.name === productName) {
           product.quantity += 1;
         }
         return product;
       });
-      props.modifyCart(newCart);
+      modifyCart(newCart);
     }
     else {
       const newProduct = {
@@ -115,13 +117,13 @@ export const Store = (props: StoreProps) => {
         quantity: 1,
         url: productURL
       };
-      props.modifyCart([...props.cart, newProduct]);
+      modifyCart([...cart, newProduct]);
     }
-    props.changeItems(props.itemCount + 1);
+    changeItems(itemCount + 1);
   }
 
   const checkInCart = (name: string) => {
-    for (const product of props.cart) {
+    for (const product of cart) {
       if (product.name === name) {
         return true;
       }
@@ -136,7 +138,6 @@ export const Store = (props: StoreProps) => {
 
   const mapRows = (row: any) => {
     return row.map((product: any) => {
-      // console.log(product.name);
       return (
         <div className="card m-4 ms-5 col" id={product.id} data-name={product.name} key={product.id}>
           <img src={product.url} className="mx-auto" alt={product.name} />

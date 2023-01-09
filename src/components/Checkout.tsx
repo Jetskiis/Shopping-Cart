@@ -17,61 +17,62 @@ type productInfo = {
 }
 
 const Checkout = (props: CheckoutProps) => {
+  const { cart, itemCount, modifyCart, changeItems } = props;
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     let total = 0;
-    for (const product of props.cart) {
+    for (const product of cart) {
       total += product.price * product.quantity;
     }
     setTotal(total);
-  }, [total, props.cart]);
+  }, [total, cart]);
 
   const removeItem = (e: React.MouseEvent) => {
     const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.dataset.pid;
     let quantity = 0;
-    const newCart = props.cart.filter((product) => {
+    const newCart = cart.filter((product) => {
       if (product.id == parseInt(id)) {
         quantity = product.quantity;
       }
       return product.id != parseInt(id);
     });
-    props.modifyCart(newCart);
-    props.changeItems(props.itemCount - quantity);
+    modifyCart(newCart);
+    changeItems(itemCount - quantity);
   };
 
   const decreaseQuantity = (e: React.MouseEvent) => {
     const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.parentElement?.dataset.pid;
-    for (const product of props.cart) {
+    for (const product of cart) {
       if (product.id == parseInt(id)) {
         if (product.quantity == 1)
           return;
       }
     }
-    const newCart = props.cart.map((product) => {
+    const newCart = cart.map((product) => {
       if (product.id == parseInt(id)) {
         product.quantity -= 1;
       }
       return product;
     });
-    props.modifyCart(newCart);
-    props.changeItems(props.itemCount - 1);
+    modifyCart(newCart);
+    changeItems(itemCount - 1);
   };
 
   const increaseQuantity = (e: React.MouseEvent) => {
     const id: any = (e.target as HTMLFormElement).parentElement?.parentElement?.parentElement?.dataset.pid;
-    const newCart = props.cart.map((product) => {
+    const newCart = cart.map((product) => {
       if (product.id == parseInt(id)) {
         product.quantity += 1;
       }
       return product;
     });
-    props.modifyCart(newCart);
-    props.changeItems(props.itemCount + 1);
+    modifyCart(newCart);
+    changeItems(itemCount + 1);
   };
 
   const cartItems = () => {
-    return props.cart.map((product) => {
+    return cart.map((product) => {
       return (
         <div className="card border border-dark mx-2 my-3 p-2 d-flex flex-row justify-content-center align-items-center bg-light checkout-card" data-pid={product.id} key={product.id}>
           <img src={product.url} className="mx-auto" alt={product.name} />
